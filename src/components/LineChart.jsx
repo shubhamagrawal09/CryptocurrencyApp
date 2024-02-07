@@ -1,18 +1,56 @@
 import { Col, Row, Typography } from 'antd'
 import React from 'react'
+import "chart.js/auto";
+import { Line } from 'react-chartjs-2';
 
 const { Title } = Typography;
-const LineChart = ({ coinName, coinHistory, currentPrice }) => {
+const LineChart = ({ coinName, coinHistory, currentPrice, cryptoDetails }) => {
+  const coinPrice = [];
+  const coinTimestamp = [];
+
+  for (let i = 0; i < coinHistory?.length; i += 1) {
+    coinPrice.push(coinHistory[i]?.price);
+  }
+
+  for (let i = 0; i < coinHistory?.length; i += 1) {
+    coinTimestamp.push(new Date(coinHistory[i]?.timestamp).toLocaleDateString());
+  }
+  const data = {
+    labels: coinTimestamp,
+    datasets: [
+      {
+        label: 'Price In USD',
+        data: coinPrice,
+        fill: false,
+        backgroundColor: '#0071bd',
+        borderColor: '#0071bd',
+      },
+    ],
+  };
+
+  const options = {
+    scales: {
+      yAxes: [
+        {
+          ticks: {
+            beginAtZero: true,
+          },
+        },
+      ],
+    },
+  };
+
   console.log('00',coinHistory)
   return (
     <>  
         <Row className='chart-header'>
             <Title level={2} className="chart-title" >{coinName} Price Chart</Title>
             <Col className="price-container">
-                <Title level={5} className="price-change">{coinHistory?.price}%</Title>
-                <Title level={5} className="current-price">Current {coinName} Price: ${currentPrice}</Title>
+                <Title level={5} className="price-change">{cryptoDetails?.change}%</Title>
+                <Title level={5} className="current-price">Current {coinName} Price: $ {currentPrice}</Title>
             </Col>
         </Row>
+        <Line data={data} options={options} />
     </>
   )
 }

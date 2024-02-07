@@ -50,10 +50,10 @@ const CryptoDetails = () => {
           {cryptoDetails?.name} live price in US Dollar (USD). View value statistics, market cap and supply.
         </p>
       </Col>
-      <Select defaultValue="7d" className="select-timeperiod" placeholder="Select Timeperiod" onChange={(value) => console.log('first')(value)}>
+      <Select defaultValue="7d" className="select-timeperiod" placeholder="Select Timeperiod" onChange={(value) => setTimePeriod(value)}>
         {time.map((date) => <Option key={date}>{date}</Option>)}
       </Select>
-     { <LineChart coinHistory={coinHistoryDetails} currentPrice={millify(cryptoDetails?.price)} coinName={cryptoDetails?.name} />   }
+      <LineChart cryptoDetails={cryptoDetails}  coinHistory={coinHistoryDetails} currentPrice={millify(cryptoDetails?.price)} coinName={cryptoDetails?.name} />   
       <Col className="stats-container">
         <Col className="coin-value-statistics">
           <Col className="coin-value-statistics-heading">
@@ -73,7 +73,7 @@ const CryptoDetails = () => {
         <Col className="other-stats-info">
           <Col className="coin-value-statistics-heading">
             <Title level={3} className="coin-details-heading">Other Stats Info</Title>
-            <p>An overview showing the statistics of {cryptoDetails.name}, such as the base and quote currency, the rank, and trading volume.</p>
+            <p>An overview showing the statistics of {cryptoDetails?.name}, such as the base and quote currency, the rank, and trading volume.</p>
           </Col>
           {genericStats.map(({ icon, title, value }) => (
             <Col className="coin-stats">
@@ -89,12 +89,12 @@ const CryptoDetails = () => {
       <Col className="coin-desc-link">
         <Row className="coin-desc">
           <Title level={3} className="coin-details-heading">
-            What is {cryptoDetails.name} ? <br/>
+            What is {cryptoDetails?.name} ? <br/>
             {HTMLReactParser(cryptoDetails.description)}  
           </Title>
         </Row>
         <Col className="coin-links">
-          <Title level={3} className="coin-details-heading">{cryptoDetails.name} Links</Title>
+          <Title level={3} className="coin-details-heading">{cryptoDetails?.name} Links</Title>
           {cryptoDetails.links?.map((link) => (
             <Row className="coin-link" key={link.name}>
               <Title level={5} className="link-name">{link.type}</Title>
